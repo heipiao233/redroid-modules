@@ -1,6 +1,6 @@
 ccflags-y += -I$(src)
 obj-m := ashmem_linux.o
-ashmem_linux-y := ashmem.o deps.o
+ashmem_linux-y := ashmem.o deps.o get_kln.o
 
 KDIR ?= /lib/modules/`uname -r`/build
 

@@ -402,7 +402,7 @@ static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
 		ret = -EPERM;
 		goto out;
 	}
-	vma->vm_flags &= ~calc_vm_may_flags(~asma->prot_mask);
+	vm_flags_clear(vma, ~calc_vm_may_flags(~asma->prot_mask));
 
 	if (!asma->file) {
 		char *name = ASHMEM_NAME_DEF;
@@ -947,7 +947,7 @@ static int __init ashmem_init(void)
 		goto out_free2;
 	}
 
-	ret = register_shrinker(&ashmem_shrinker);
+	ret = register_shrinker(&ashmem_shrinker, "ashmem_shrinker");
 	if (ret) {
 		pr_err("failed to register shrinker!\n");
 		goto out_demisc;
