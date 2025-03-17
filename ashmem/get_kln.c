@@ -13,7 +13,11 @@ unsigned long (*kln_pointer)(const char* name) = NULL;
 static struct kprobe kp0, kp1;
 
 KPROBE_PRE_HANDLER(handler_pre0) {
+    #if defined(__arm__) || defined(__aarch64__)
     kln_addr = (--regs->pc);
+    #else
+    kln_addr = (--regs->ip);
+    #endif
 
     return 0;
 }
